@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TaskManagerAPI.Data;
 using TaskManagerAPI.Repository;
 using Serilog;
+using TaskManagerAPI.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddDbContext<DataContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("TaskManagerDb")));
+
+builder.Services.Configure<EMailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 
 
 

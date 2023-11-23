@@ -14,6 +14,6 @@ namespace TaskManagerAPI.Repository
 
         Task UpdateUser(UserModel user);
 
-        Task<bool> loginUser(UserModel user);    
+        Task<User> loginUser(UserModel user);    
     }
 }

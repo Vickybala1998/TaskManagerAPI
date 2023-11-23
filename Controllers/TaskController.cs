@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using TaskManagerAPI.Model;
 using TaskManagerAPI.Repository;
 
@@ -52,6 +53,13 @@ namespace TaskManagerAPI.Controllers
         public async Task<List<Notification>> getNotification()
         {
             return await _taskRepository.getNotification();
+        }
+
+        [HttpGet("Emailnotification")]
+        public async Task<ActionResult> sendEMailNotification()
+        {
+            await _taskRepository.sendEmailNotification();
+            return StatusCode(200);
         }
 
     }

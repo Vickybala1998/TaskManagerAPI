@@ -1,15 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using TaskManagerAPI.Data;
 using TaskManagerAPI.Model;
+using MimeKit;
 
 namespace TaskManagerAPI.Repository
 {
     public class TaskRepository:ITaskRepository
     {
         private readonly DataContext _dataContext;
-        public TaskRepository(DataContext dataContext) {
+        private readonly EMailSettings _emailSettings;
+        public TaskRepository(DataContext dataContext,IOptions<EMailSettings> emailSettings) {
             _dataContext= dataContext;
+            _emailSettings= emailSettings.Value;
         }
 
         public async Task createNewTask(TaskDetails taskDetails)
@@ -82,6 +88,24 @@ namespace TaskManagerAPI.Repository
         {
             await _dataContext._notifications.AddAsync(_notification);
             _dataContext.SaveChanges();
+        }
+
+        public async Task sendEmailNotification()
+        {
+            using (var client=new SmtpClient())
+            {
+                var mail = new MimeKit.MimeMessage();
+                mail.Sender = MailboxAddress.Parse("vickybalaautomobile@gmail.com");
+                mail.To.Add(MailboxAddress.Parse("vigneshkumar10698@gmail.com"));
+                var builder = new BodyBuilder();
+                builder.HtmlBody = "_emailNotification.body";
+                mail.Body=builder.ToMessageBody();
+                mail.Subject= "_emailNotification.subject";
+
+                client.Connect(_emailSettings.smtpServer, _emailSettings.smtpPort, SecureSocketOptions.StartTls);
+                client.Authenticate("vickybalaautomobile@gmail.com", "uewb exzg ybbm smsi");
+                await client.SendAsync(mail);
+            }
         }
     }
 }

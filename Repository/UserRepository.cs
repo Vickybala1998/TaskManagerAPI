@@ -98,23 +98,26 @@ namespace TaskManagerAPI.Repository
             await _dataContext.SaveChangesAsync(true);
         }
 
-        public Task<bool> loginUser(UserModel _user)
+        public Task<User> loginUser(UserModel _user)
         {
-            if(_dataContext!=null && _dataContext._users!=null)
+            User? userdetails = new User();
+            if (_dataContext!=null && _dataContext._users!=null)
             {
-                User? userdetails = _dataContext._users.FirstOrDefault(user => user.Email == _user.Email);
+                userdetails = _dataContext._users.FirstOrDefault(user => user.Email == _user.Email);
                 if (userdetails != null && userdetails.Password==_user.Password)
                 {
-                    return Task.FromResult(true);
+                    return Task.FromResult(userdetails);
                 }
+
                 else
-                    return Task.FromResult(false);
+                {
+                    return Task.FromResult(userdetails);
+                }
             }
             else
             {
-                return Task.FromResult(false);
+                return Task.FromResult(userdetails);
             }
-            
         }
             
 

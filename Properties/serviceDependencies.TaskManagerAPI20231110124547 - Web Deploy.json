@@ -3,6 +3,14 @@
     "apis1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/TaskManagerAPIapi1/apis/TaskManagerAPI",
       "type": "apis.azure"
+    },
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/TaskManagerAPI20231110124547/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsTaskManagerDb_CA6944F642",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/taskmanagerapidbserver/databases/TaskManagerAPI_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:TaskManagerDb",
+      "dynamicId": null
     }
   }
 }

@@ -148,16 +148,16 @@ namespace TaskManagerAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> loginUser([FromBody]UserModel user)
+        public async Task<User> loginUser([FromBody]UserModel user)
         {
-            bool isUserAvailable= await _userRepository.loginUser(user);
-            if (isUserAvailable)
+            User userdetails= await _userRepository.loginUser(user);
+            if (userdetails != null)
             {
-                return StatusCode(200);
+                return userdetails;
             }
             else
             {
-                return StatusCode(400);
+                return new User();
             }
         }
 

@@ -16,6 +16,8 @@ namespace TaskManagerAPI.Repository
         Task createNotification(Notification notification);
 
         Task<List<Notification>> getNotification();
+
+        Task sendEmailNotification();
     
     }
 }
